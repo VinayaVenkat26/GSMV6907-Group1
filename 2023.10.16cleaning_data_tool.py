@@ -81,7 +81,7 @@ if dup_check != "No duplicates were found in rows or columns.":
 else:
     st.write('Moving on to the next cleaning step')
 
-if dup_handle = 'Ignore':
+if dup_handle == 'Ignore':
     st.write('Moving on to the next cleaning step')
 
 
