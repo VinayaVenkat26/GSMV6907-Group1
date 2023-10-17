@@ -191,7 +191,7 @@ else:
 st.subheader('4. Data type converter')
 st.markdown('<a name="convert-int-to-decimal"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
-selected_option_convert = st.selectbox("Would you like to convert data types in your file?", ["YES", "NO"])
+selected_option_convert = st.selectbox("Would you like to convert data types in your file?", ["NO", "YES"])
 
 if selected_option_convert == "YES":
     selected_conversion_type = st.selectbox("What conversion type would you like to perform?", ["Convert to Integers", "Convert to Floats", "Convert to Strings"])
