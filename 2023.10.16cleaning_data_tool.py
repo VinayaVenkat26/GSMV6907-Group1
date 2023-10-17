@@ -191,7 +191,54 @@ st.subheader('5. Split or concatenate columns')
 st.markdown('<a name="split-concatenate-columns"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
 # Your code for splitting or concatenating columns...
+# Choose whether to split or concatenate columns
+operation = st.radio("Choose operation:", ("Split", "Concatenate"))
 
+if operation == "Split":
+        # Split columns
+        st.subheader("Split Columns")
+        column_to_split = st.selectbox("Select the column to split:", df.columns)
+        separator = st.text_input("Separator for splitting:", ",")
+        split_values = df[column_to_split].str.split(separator, expand=True)
+
+        # Label the split columns with the original column name
+        split_values.columns = [f"{column_to_split}_{i + 1}" for i in range(split_values.shape[1])]
+
+        # Display the split values along with the original dataset
+        st.write(split_values)
+        st.write("Merged Dataset with Split Columns")
+        merged_df = pd.concat([df, split_values], axis=1)
+        st.write(merged_df)
+
+else:
+        # Concatenate columns
+    st.subheader("Concatenate Columns")
+    st.write("Select the columns to concatenate:")
+    concat_columns = st.multiselect("Columns to concatenate:", df.columns)
+    separator = st.text_input("Separator for concatenation:", " ")
+    concat_df = df[concat_columns].astype(str).agg(separator.join, axis=1)
+
+        # Display the concatenated values along with the original dataset
+    st.write("Concatenated Values")
+    st.write(concat_df)
+    st.write("Merged Dataset with Concatenated Column")
+    merged_df = pd.concat([df, concat_df.rename("Concatenated_Column")], axis=1)
+    st.write(merged_df)
+
+    # Choose columns to keep or delete
+st.subheader("Choose Columns to Keep/Delete")
+action = st.radio("Choose action:", ("Keep Selected Columns", "Delete Selected Columns"))
+if action == "Keep Selected Columns":
+    columns_to_keep = st.multiselect("Columns to keep:", merged_df.columns)
+    result_df = merged_df[columns_to_keep]
+else:
+    columns_to_delete = st.multiselect("Columns to delete:", merged_df.columns)
+    result_df = merged_df.drop(columns=columns_to_delete)
+
+    # Display the resulting dataset
+    st.subheader("Resulting Dataset")
+    st.write(result_df)
+    
 # Section 7: Convert dates to gene names
 st.subheader('6. Date-to-Gene Tool')
 st.markdown('<a name="convert-dates-to-gene-names"></a>', unsafe_allow_html=True)  # Create an anchor for this section
