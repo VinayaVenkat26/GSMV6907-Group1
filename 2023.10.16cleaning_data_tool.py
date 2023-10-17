@@ -74,16 +74,20 @@ if df is not None and not df.empty:
 
 
 # Decide
-dup_check = check_duplicates(df)
-if dup_check == "No duplicates were found in rows or columns.":
-    st.write('Moving on to the next cleaning step')
-
-dup_handle = st.selectbox('How would you like to handle your duplicates? (Select one)', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
-
-if dup_check != "No duplicates were found in rows or columns.":
-    return dup_handle
-
+def handle_duplicates(df):
+    dup_check = check_duplicates(df)
     
+    if dup_check == "No duplicates were found in rows or columns.":
+        st.write('Moving on to the next cleaning step')
+    else:
+        dup_handle = st.selectbox('How would you like to handle your duplicates? (Select one)', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
+        return dup_handle
+
+
+# Call the function
+dup_handle = handle_duplicates(df)
+
+
 # Ignore
 if dup_handle == 'Ignore':
     st.write('Moving on to the next cleaning step')
