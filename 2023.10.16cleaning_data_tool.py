@@ -80,8 +80,8 @@ if dup_check == "No duplicates were found in rows or columns.":
 
 dup_handle = st.selectbox('How would you like to handle your duplicates? (Select one)', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
 
-if dup_check != "No duplicates were found in rows or columns."
-     return dup_handle
+if dup_check != "No duplicates were found in rows or columns.":
+    return dup_handle
 
     
 # Ignore
