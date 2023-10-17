@@ -37,6 +37,11 @@ if uploaded_file is not None:
             st.subheader("Split Data Result:")
             st.write(df)
 
+    delete = st.checkbox('Delete additional columns')
+    if delete:
+        # Need to spedcy the columns for delete
+        st.
+
     elif operation == "Concatenate":
         st.subheader("Concatenate Data")
 
