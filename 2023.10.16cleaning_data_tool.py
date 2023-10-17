@@ -188,7 +188,7 @@ else:
     st.write("No missing values were found in the dataframe. Moing to the next step...")
 
 # Section 5: Integer to decimal conversion and vice versa
-st.subheader('4. Integer to decimal conversion and vice versa')
+st.subheader('4. Data type converter')
 st.markdown('<a name="convert-int-to-decimal"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
 selected_option_convert = st.selectbox("Would you like to convert data types in your file?", ["YES", "NO"])
@@ -232,7 +232,7 @@ st.markdown('<a name="split-concatenate-columns"></a>', unsafe_allow_html=True) 
 # Your code for splitting or concatenating columns...
 
 # Section 7: Convert dates to gene names
-st.subheader('6. Converting dates to gene names in transcriptomic datafiles')
+st.subheader('6. Date-to-Gene Tool')
 st.markdown('<a name="convert-dates-to-gene-names"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
 st.write("If you want to perform a Date-to-Gene conversion in your file, you can click the link below to launch the Date-to-Gene tool made by Dr. Chan Kuan Rong")
