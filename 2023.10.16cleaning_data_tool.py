@@ -187,12 +187,9 @@ if any(missing_rows) or any(missing_cols):
 else:
     st.write("No missing values were found in the dataframe. Moing to the next step...")
 
-
 # Section 5: Integer to decimal conversion and vice versa
 st.subheader('4. Integer to decimal conversion and vice versa')
 st.markdown('<a name="convert-int-to-decimal"></a>', unsafe_allow_html=True)  # Create an anchor for this section
-
-# Your code for integer to decimal conversion...
 
 selected_option_convert = st.selectbox("Would you like to convert data types in your file?", ["YES", "NO"])
 
@@ -233,8 +230,6 @@ st.subheader('5. Split or concatenate columns')
 st.markdown('<a name="split-concatenate-columns"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
 # Your code for splitting or concatenating columns...
-
-
 
 # Section 7: Convert dates to gene names
 st.subheader('6. Converting dates to gene names in transcriptomic datafiles')
