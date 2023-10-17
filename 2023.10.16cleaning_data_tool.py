@@ -14,9 +14,9 @@ st.sidebar.header('Welcome to the data cleaning webtool')
 st.sidebar.write('In this webtool, we will be cleaning your data file in the following ways:')
 st.sidebar.markdown('1. [Managing duplicate values](#manage-duplicates)')
 st.sidebar.markdown('2. [Managing missing values](#manage-missing)')
-st.sidebar.markdown('3. [Integer to decimal conversion and vice versa](#convert-int-to-decimal)')
+st.sidebar.markdown('3. [Date type converter](#convert-int-to-decimal)')
 st.sidebar.markdown('4. [Split or concatenate columns](#split-concatenate-columns)')
-st.sidebar.markdown('5. [Converting dates to gene names in transcriptomic datafiles](#convert-dates-to-gene-names)')  # Provided the link to the gene-to-date converter
+st.sidebar.markdown('5. [Date-to-Gene converter](#convert-dates-to-gene-names)')  # Provided the link to the gene-to-date converter
 st.sidebar.markdown('To upload your data, click [here](#upload-anchor)')  # Managed to override the error when no file is uploaded
 st.sidebar.checkbox('Check documentation')  # Need to add more documentation - complete demo with snapshots  
 
