@@ -192,6 +192,7 @@ st.markdown('<a name="split-concatenate-columns"></a>', unsafe_allow_html=True) 
 
 # Your code for splitting or concatenating columns...
 # Choose whether to split or concatenate columns
+# Choose whether to split or concatenate columns
 operation = st.radio("Choose operation:", ("Split", "Concatenate"))
 
 if operation == "Split":
