@@ -59,13 +59,13 @@ def check_duplicates(df):
         if row_dups and col_dups:
             return "Both rows and columns have duplicates."
         elif row_dups:
+            duplicated_values = df[df.duplicated()]
+            st.write(duplicated_values)
             return "Rows have duplicates."
-            duplicated_values = df[df.duplicated()]
-            st.write(duplicated_values)
         elif col_dups:
-            return "Columns have duplicates."
             duplicated_values = df[df.duplicated()]
             st.write(duplicated_values)
+            return "Columns have duplicates." 
         else:
             return "No duplicates were found in rows or columns."
 
