@@ -193,6 +193,6 @@ st.markdown('<a name="split-concatenate-columns"></a>', unsafe_allow_html=True) 
 st.subheader('6. Converting dates to gene names in transcriptomic datafiles')
 st.markdown('<a name="convert-dates-to-gene-names"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
-# Your code for converting dates to gene names...
+st.write("If you want to perform a Date-to-Gene conversion in your file, you can click the link below to launch the Date-to-Gene tool made by Dr. Chan Kuan Rong")
 
-
+st.write("https://share.streamlit.io/kuanrongchan/date-to-gene-converter/main/date_gene_tool.py")
