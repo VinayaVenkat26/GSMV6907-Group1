@@ -92,6 +92,10 @@ dup_handle = handle_duplicates(df)
 if dup_handle == 'Ignore':
     st.write('Moving on to the next cleaning step')
 
+mean_operation = None
+keep_first = None
+keep_last = None
+
 # Means
 if dup_handle == 'Take mean of duplicates':
     mean_operation = st.selectbox('Calculate mean for:',['Rows','Columns'])
@@ -109,23 +113,23 @@ if  mean_operation == 'Columns'
 if dup_handle == 'Choose only the first value':    
     keep_first = st.selectbox('Keep first of:',['Rows','Columns'])
 
-if mean_operation == 'Rows':
+if keep_first == 'Rows':
     st.subheader('After deleting unwanted duplicates')
     df = df[df.duplicated.index(keep = 'first')]
     
-if  mean_operation == 'Columns' 
+if  keep_first == 'Columns' 
     st.subheader('After deleting unwanted duplicates')
     df = df[df.duplicated.header(keep = 'first')]
 
 # Keep last
 if dup_handle == 'Choose only the last value':    
-    keep_first = st.selectbox('Keep last of:',['Rows','Columns'])
+    keep_last = st.selectbox('Keep last of:',['Rows','Columns'])
 
-if mean_operation == 'Rows':
+if keep_last == 'Rows':
     st.subheader('After deleting unwanted duplicates')
     df = df[df.duplicated.index(keep = 'last')]
     
-if  mean_operation == 'Columns' 
+if  keep_last == 'Columns' 
     st.subheader('After deleting unwanted duplicates')
     df = df[df.duplicated.header(keep = 'last')]
 
