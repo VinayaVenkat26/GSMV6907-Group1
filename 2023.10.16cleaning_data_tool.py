@@ -17,8 +17,8 @@ st.sidebar.markdown('2. [Managing missing values](#manage-missing)')
 st.sidebar.markdown('3. [Integer to decimal conversion and vice versa](#convert-int-to-decimal)')
 st.sidebar.markdown('4. [Split or concatenate columns](#split-concatenate-columns)')
 st.sidebar.markdown('5. [Converting dates to gene names in transcriptomic datafiles](#convert-dates-to-gene-names)')  # Provided the link to the gene-to-date converter
-st.sidebar.markdown('To upload your data, click [here](#upload-anchor)')  # Mamaged to override the error when no file is uploaded
-st.sidebar.checkbox('Check documentation')
+st.sidebar.markdown('To upload your data, click [here](#upload-anchor)')  # Managed to override the error when no file is uploaded
+st.sidebar.checkbox('Check documentation')  # Need to add more documentation - complete demo with snapshots  
 
 
 # Section 2: Upload datafile
