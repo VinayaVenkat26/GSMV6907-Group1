@@ -110,7 +110,6 @@ if df is not None and not df.empty:
 
     df = df.loc[:, ~df.columns.duplicated(keep='last')]
 
-
 # Section 4: Manage missing values
 
 st.subheader('3. Managing missing values')
@@ -127,7 +126,7 @@ def handle_missing_values(df):
         option = st.radio("Select an action:", ("Delete Rows with Missing Values", "Fill Missing Values"))
         
         if option == "Delete Rows with Missing Values":
-            df = df.dropna()
+            df = df.dropna(axis=0, how = 'any')
             st.write("Rows with missing values deleted.")
             df
         else:
@@ -142,10 +141,11 @@ def handle_missing_values(df):
         st.dataframe(df)
     else:
         st.write("No rows with missing values found.")
-
+        
+    return df
 
 # call the function
-handle_missing_values(df)
+df = handle_missing_values(df)
 
 # Section 5: Integer to decimal conversion and vice versa
 st.subheader('4. Data type converter')
