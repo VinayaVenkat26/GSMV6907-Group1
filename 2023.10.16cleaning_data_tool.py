@@ -106,7 +106,27 @@ st.markdown('<a name="convert-int-to-decimal"></a>', unsafe_allow_html=True)  # 
 
 # Your code for integer to decimal conversion...
 
+selected_option_convert = st.selectbox("Would you like to convert data type in your file?", ["YES", "NO"])
 
+if selected_option_convert == "YES":
+    selected_conversion_type = st.selectbox("What conversion type would you like to perform?", ["Convert to Integers", "Convert to Floats", "Convert to Strings"])
+    if selected_conversion_type == "Convert to Floats":
+        column_to_convert = st.text_input("Enter the name of the column you want to convert")
+        df[column_to_convert] = df[column_to_convert].astype(float)
+        df
+        
+    elif selected_conversion_type == "Convert to Integers":
+        column_to_convert = st.text_input("Enter the name of the column you want to convert")
+        df[column_to_convert] = df[column_to_convert].astype(int)
+        df
+    
+    elif selected_conversion_type == "Convert to Strings":
+        column_to_convert = st.text_input("Enter the name of the column you want to convert")
+        df[column_to_convert] = df[column_to_convert].astype(str)
+        df
+    
+else:
+    st.write("We will NOT be converting data types in your file")
 
 
 # Section 6: Split or concatenate columns
