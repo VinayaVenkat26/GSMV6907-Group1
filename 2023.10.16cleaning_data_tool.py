@@ -104,7 +104,7 @@ if mean_operation == 'Rows':
     st.subheader('Data after mean')
     df = df.groupby(df.index).mean()
     
-if  mean_operation == 'Columns' 
+if  mean_operation == 'Columns': 
     st.subheader('Data after mean')
     df = df.groupby(df.header).mean()
 
@@ -117,7 +117,7 @@ if keep_first == 'Rows':
     st.subheader('After deleting unwanted duplicates')
     df = df[df.duplicated.index(keep = 'first')]
     
-if  keep_first == 'Columns' 
+if  keep_first == 'Columns':
     st.subheader('After deleting unwanted duplicates')
     df = df[df.duplicated.header(keep = 'first')]
 
@@ -129,7 +129,7 @@ if keep_last == 'Rows':
     st.subheader('After deleting unwanted duplicates')
     df = df[df.duplicated.index(keep = 'last')]
     
-if  keep_last == 'Columns' 
+if  keep_last == 'Columns': 
     st.subheader('After deleting unwanted duplicates')
     df = df[df.duplicated.header(keep = 'last')]
 
