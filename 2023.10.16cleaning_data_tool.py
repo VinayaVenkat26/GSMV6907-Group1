@@ -111,18 +111,21 @@ selected_option_convert = st.selectbox("Would you like to convert data type in y
 if selected_option_convert == "YES":
     selected_conversion_type = st.selectbox("What conversion type would you like to perform?", ["Convert to Integers", "Convert to Floats", "Convert to Strings"])
     if selected_conversion_type == "Convert to Floats":
-        column_to_convert = st.text_input("Enter the name of the column you want to convert")
-        df[column_to_convert] = df[column_to_convert].astype(float)
+        columns_to_convert = st.text_input("Enter the names of the columns you want to convert (separate each column name by a comma without a space if inputing more than 1 column, e.g., apple,orange,avocado)")
+        columns_to_convert_split = columns_to_convert.split(",")
+        df[columns_to_convert_split] = df[columns_to_convert_split].astype(float)
         df
         
     elif selected_conversion_type == "Convert to Integers":
-        column_to_convert = st.text_input("Enter the name of the column you want to convert")
-        df[column_to_convert] = df[column_to_convert].astype(int)
+        columns_to_convert = st.text_input("Enter the names of the columns you want to convert (separate each column name by a comma without a space if inputing more than 1 column, e.g., apple,orange,avocado)")
+        columns_to_convert_split = columns_to_convert.split(",")
+        df[columns_to_convert_split] = df[columns_to_convert_split].astype(int)
         df
     
     elif selected_conversion_type == "Convert to Strings":
-        column_to_convert = st.text_input("Enter the name of the column you want to convert")
-        df[column_to_convert] = df[column_to_convert].astype(str)
+        columns_to_convert = st.text_input("Enter the names of the columns you want to convert (separate each column name by a comma without a space if inputing more than 1 column, e.g., apple,orange,avocado)")
+        columns_to_convert_split = columns_to_convert.split(",")
+        df[columns_to_convert_split] = df[columns_to_convert_split].astype(str)
         df
     
 else:
