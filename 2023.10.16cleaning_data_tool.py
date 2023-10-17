@@ -16,8 +16,8 @@ st.sidebar.markdown('1. [Managing duplicate values](#manage-duplicates)')
 st.sidebar.markdown('2. [Managing missing values](#manage-missing)')
 st.sidebar.markdown('3. [Integer to decimal conversion and vice versa](#convert-int-to-decimal)')
 st.sidebar.markdown('4. [Split or concatenate columns](#split-concatenate-columns)')
-st.sidebar.markdown('5. [Converting dates to gene names in transcriptomic datafiles](#convert-dates-to-gene-names)')  # Provide the link to the gene-to-date converter
-st.sidebar.markdown('To upload your data, click [here](#upload-anchor)')
+st.sidebar.markdown('5. [Converting dates to gene names in transcriptomic datafiles](#convert-dates-to-gene-names)')  # Provided the link to the gene-to-date converter
+st.sidebar.markdown('To upload your data, click [here](#upload-anchor)')  # Mamaged to override the error when no file is uploaded
 st.sidebar.checkbox('Check documentation')
 
 
@@ -36,15 +36,19 @@ st.sidebar.write('*2. Add an Excel file with only one sheet in it to prevent err
 
 # Convert the uploaded file to a DataFrame
 df = None
-if option == 'Excel':
-    df = pd.read_excel(upload, index_col=0)
-    df
-elif option == 'CSV':
-    df = pd.read_csv(upload, index_col=0)
-    df
-elif option == 'TSV':
-    df = pd.read_csv(upload, sep='\t', index_col=0)
-    df
+
+if upload is not None:
+    if option == 'Excel':
+        df = pd.read_excel(upload, index_col=0)
+    elif option == 'CSV':
+        df = pd.read_csv(upload, index_col=0)
+    elif option == 'TSV':
+        df = pd.read_csv(upload, sep='\t', index_col=0)
+else:
+    # Load an example datafile or display a message if no file is uploaded
+    df = pd.read_excel('C:\\Users\\vinaya\\Downloads\\Example data file for STREAMLIT APP.xlsx', index_col = 0)  # Change to URL once the example file in github is loaded
+    st.write('No file uploaded. Showing example data.')
+    st.write(df)
 
 # Section 3: Check for duplicate values
 st.subheader('2. Managing duplicate values')
@@ -70,7 +74,7 @@ def check_duplicates(df):
             return "No duplicates were found in rows or columns."
 
 if df is not None and not df.empty:
-    st.sidebar.write(check_duplicates(df))
+    st.write(check_duplicates(df))
 
 
 # Decide
@@ -78,7 +82,7 @@ def handle_duplicates(df):
     dup_check = check_duplicates(df)
     
     if dup_check == "No duplicates were found in rows or columns.":
-        st.write('Moving on to the next cleaning step')
+        st.write('Moving on to the next cleaning step....')
     else:
         dup_handle = st.selectbox('How would you like to handle your duplicates? (Select one)', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
         return dup_handle
@@ -86,7 +90,6 @@ def handle_duplicates(df):
 
 # Call the function
 dup_handle = handle_duplicates(df)
-
 
 # Ignore
 if dup_handle == 'Ignore':
@@ -127,7 +130,7 @@ if dup_handle == 'Choose only the last value':
 
 if keep_last == 'Rows':
     st.subheader('After deleting unwanted duplicates')
-     df = df[~df.index.duplicated(keep='last')]
+    df = df[~df.index.duplicated(keep='last')]
     
 if  keep_last == 'Columns': 
     st.subheader('After deleting unwanted duplicates')
@@ -135,18 +138,54 @@ if  keep_last == 'Columns':
 
 
 # Section 4: Manage missing values
+
 st.subheader('3. Managing missing values')
 st.markdown('<a name="manage-missing"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
-# Only need to display rows or columns with missing values
+# Find rows and columns with missing values
+missing_values = df.isna()
+missing_rows = missing_values.any(axis=1)
+missing_cols = missing_values.any()
 
+if any(missing_rows) or any(missing_cols):
 
-st.write("Your dataframe has missing values here:")
-missing_values = df.isna().stack()
-missing_rows, missing_cols = missing_values[missing_values].index.levels
-st.write(f"Rows with missing values: {missing_rows.tolist()}")
-st.write(f"Columns with missing values: {missing_cols.tolist()}")
+    # Display rows with missing values                        # This part requires more troubleshooting
+    if any(missing_rows):
+        st.write("Rows with missing values:")
+        st.write(df[missing_rows])
+        missing_rows_indices = df[missing_rows].index.tolist()
+        selected_rows = []  # Initialize as an empty list
 
+        if st.button('Compute Missing Values for Selected Rows'):
+            for row_index in missing_rows_indices:
+                if row_index in selected_rows:
+                    action = st.selectbox(f"Select action for row {row_index}:", ["Delete Row", "Fill with Value"])
+                    if action == "Delete Row":
+                        df = df.drop(index=row_index)
+                    elif action == "Fill with Value":
+                        filler_value = st.text_input(f"Fill missing values for row {row_index} with:")
+                        df.loc[row_index] = df.loc[row_index].fillna(filler_value)
+                        
+
+    # Display columns with missing values
+    if any(missing_cols):
+        st.write("Columns with missing values:")
+        st.write(df.loc[:, missing_cols])
+        missing_cols_names = missing_cols[missing_cols].index.tolist()
+        selected_cols = []  # Initialize as an empty list
+
+        if st.button('Compute Missing Values for Selected Columns'):
+            for col_name in missing_cols_names:
+                if col_name in selected_cols:
+                    action = st.selectbox(f"Select action for column {col_name}:", ["Delete Column", "Fill with Value"])
+                    if action == "Delete Column":
+                        df = df.drop(columns=col_name)
+                    elif action == "Fill with Value":
+                        filler_value = st.text_input(f"Fill missing values for column {col_name} with:")
+                        df[col_name] = df[col_name].fillna(filler_value)
+                        
+else:
+    st.write("No missing values were found in the dataframe. Moing to the next step...")
 
 
 # Section 5: Integer to decimal conversion and vice versa
