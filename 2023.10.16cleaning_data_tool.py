@@ -80,9 +80,47 @@ if dup_check != "No duplicates were found in rows or columns.":
     dup_handle = st.selectbox('Please choose the file format you are uploading', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
 else:
     st.write('Moving on to the next cleaning step')
-
+    
+# Ignore
 if dup_handle == 'Ignore':
     st.write('Moving on to the next cleaning step')
+
+# Means
+if dup_handle == 'Take mean of duplicates':
+    mean_operation = st.seletbox('Calculate mean for:',['Rows','Columns'])
+                                 
+if mean_operation == 'Rows':
+    st.subheader('Data after mean')
+    df = df.groupby(df.index).mean()
+    
+if  mean_operation == 'Columns' 
+    st.subheader('Data after mean')
+    df = df.groupby(df.header).mean()
+
+
+# Keep first
+if dup_handle == 'Choose only the first value':    
+    keep_first = st.seletbox('Keep first of:',['Rows','Columns'])
+
+if mean_operation == 'Rows':
+    st.subheader('After deleting unwanted duplicates')
+    df = df[df.duplicated.index(keep = 'first')]
+    
+if  mean_operation == 'Columns' 
+    st.subheader('After deleting unwanted duplicates')
+    df = df[df.duplicated.header(keep = 'first')]
+
+# Keep last
+if dup_handle == 'Choose only the last value':    
+    keep_first = st.seletbox('Keep last of:',['Rows','Columns'])
+
+if mean_operation == 'Rows':
+    st.subheader('After deleting unwanted duplicates')
+    df = df[df.duplicated.index(keep = 'last')]
+    
+if  mean_operation == 'Columns' 
+    st.subheader('After deleting unwanted duplicates')
+    df = df[df.duplicated.header(keep = 'last')]
 
 
 # Section 4: Manage missing values
