@@ -18,7 +18,7 @@ st.sidebar.markdown('3. [Integer to decimal conversion and vice versa](#convert-
 st.sidebar.markdown('4. [Split or concatenate columns](#split-concatenate-columns)')
 st.sidebar.markdown('5. [Converting dates to gene names in transcriptomic datafiles](#convert-dates-to-gene-names)')  # Provide the link to the gene-to-date converter
 st.sidebar.markdown('To upload your data, click [here](#upload-anchor)')
-
+st.sidebar.checkbox('Check documentation')
 
 
 # Section 2: Upload datafile
