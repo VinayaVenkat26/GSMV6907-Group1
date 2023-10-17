@@ -93,10 +93,10 @@ st.markdown('<a name="manage-missing"></a>', unsafe_allow_html=True)  # Create a
 
 
 st.write("Your dataframe has missing values here:")
-missing_values = df.isnull().sum()
-st.write(missing_values)
-
-
+missing_values = df.isna().stack()
+missing_rows, missing_cols = missing_values[missing_values].index.levels
+st.write(f"Rows with missing values: {missing_rows.tolist()}")
+st.write(f"Columns with missing values: {missing_cols.tolist()}")
 
 
 
