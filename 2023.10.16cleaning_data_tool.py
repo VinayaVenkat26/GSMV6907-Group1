@@ -116,28 +116,36 @@ if df is not None and not df.empty:
 st.subheader('3. Managing missing values')
 st.markdown('<a name="manage-missing"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
-# Find rows and columns with missing values
-missing_rows = df.isna().any()
+def handle_missing_values(df):
+    missing_rows = df[df.isnull().any(axis=1)]
+    if not missing_rows.empty:
+        st.write("Rows with missing values:")
+        st.dataframe(missing_rows)
+        
+        # Add options for the user
+        st.subheader("Options:")
+        option = st.radio("Select an action:", ("Delete Rows with Missing Values", "Fill Missing Values"))
+        
+        if option == "Delete Rows with Missing Values":
+            df = df.dropna()
+            st.write("Rows with missing values deleted.")
+            df
+        else:
+            # Allow the user to specify a value for filling missing values
+            fill_value = st.text_input("Enter a value to fill missing values:")
+            if st.button("Fill Missing Values"):
+                df = df.fillna(fill_value)
+                st.write("Missing values filled with the specified value.")
 
-# Display rows with missing values
-if any(missing_rows):
-    st.write("Rows with missing values:")
-    st.write(df[missing_rows])
-    missing_rows_indices = df[missing_rows].tolist()
-    selected_rows = []  # Initialize as an empty list
-    st.checkbox('Handle the missing values', value = False)
+        # Display the cleaned DataFrame (either with deleted rows or filled values)
+        st.subheader("Cleaned DataFrame:")
+        st.dataframe(df)
+    else:
+        st.write("No rows with missing values found.")
 
-    if st.checkbox ==True :
-        for row_index in missing_rows_indices:
-            if row_index in selected_rows:
-                action = st.selectbox(f"Select action for row {row_index}:", ["Delete Row", "Fill with Value"])
-                if action == "Delete Row":
-                    df = df.drop(index=row_index)
-                elif action == "Fill with Value":
-                    filler_value = st.text_input(f"Fill missing values for row {row_index} with:")
-                    df.loc[row_index] = df.loc[row_index].fillna(filler_value)                       
-else:
-    st.write("No missing values were found in the dataframe. Skipping the management process.")
+
+# call the function
+handle_missing_values(df)
 
 # Section 5: Integer to decimal conversion and vice versa
 st.subheader('4. Data type converter')
