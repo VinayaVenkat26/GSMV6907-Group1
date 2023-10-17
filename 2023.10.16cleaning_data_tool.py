@@ -220,7 +220,7 @@ if selected_option_convert == "YES":
             df[columns_to_convert_split] = df[columns_to_convert_split].astype(str)
             df
         else:
-            st.write("Please type the names of the columns you wish to convert above.")
+            st.write("Please enter the names of the columns you wish to convert above.")
 
 else:
     st.write("We will NOT be converting data types in your file")
