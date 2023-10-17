@@ -106,7 +106,7 @@ if mean_operation == 'Rows':
     
 if  mean_operation == 'Columns': 
     st.subheader('Data after mean')
-    df = df.groupby(df.header).mean()
+    df = df.groupby(df.columns).mean()
 
 
 # Keep first
@@ -115,11 +115,11 @@ if dup_handle == 'Choose only the first value':
 
 if keep_first == 'Rows':
     st.subheader('After deleting unwanted duplicates')
-    df = df[df.duplicated.index(keep = 'first')]
+    df = df[~df.index.duplicated(keep='first')]
     
 if  keep_first == 'Columns':
     st.subheader('After deleting unwanted duplicates')
-    df = df[df.duplicated.header(keep = 'first')]
+    df = df.loc[:, ~df.columns.duplicated(keep='first')]
 
 # Keep last
 if dup_handle == 'Choose only the last value':    
@@ -127,11 +127,11 @@ if dup_handle == 'Choose only the last value':
 
 if keep_last == 'Rows':
     st.subheader('After deleting unwanted duplicates')
-    df = df[df.duplicated.index(keep = 'last')]
+     df = df[~df.index.duplicated(keep='last')]
     
 if  keep_last == 'Columns': 
     st.subheader('After deleting unwanted duplicates')
-    df = df[df.duplicated.header(keep = 'last')]
+    df = df.loc[:, ~df.columns.duplicated(keep='last')]
 
 
 # Section 4: Manage missing values
