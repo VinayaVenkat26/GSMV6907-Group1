@@ -38,13 +38,13 @@ st.sidebar.write('*2. Add an Excel file with only one sheet in it to prevent err
 df = None
 if option == 'Excel':
     df = pd.read_excel(upload, index_col=0)
+    df
 elif option == 'CSV':
     df = pd.read_csv(upload, index_col=0)
+    df
 elif option == 'TSV':
     df = pd.read_csv(upload, sep='\t', index_col=0)
-
-
-
+    df
 
 # Section 3: Check for duplicate values
 st.subheader('2. Managing duplicate values')
