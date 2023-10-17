@@ -50,90 +50,64 @@ else:
     st.write('No file uploaded. Showing example data.')
     st.write(df)
 
-# Section 3: Check for duplicate values
-st.subheader('2. Managing duplicate values')
+# Section 3: Check for duplicate values in row titles
+st.subheader('2. Managing duplicate values in row titles')
 st.markdown('<a name="manage-duplicates"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
-# Need to find the duplicates rows/columns and show that to the reader to decide
-def check_duplicates(df):
+# Function to check for duplicates in a specified column
+def check_duplicates_in_column(df, column_name):
     if df is not None and not df.empty:  # Check if df is not None and not empty
-        row_dups = not df.index.is_unique
-        col_dups = not df.columns.is_unique
-
-        if row_dups and col_dups:
-            return "Both rows and columns have duplicates."
-        elif row_dups:
-            duplicated_values = df[df.duplicated()]
-            st.write(duplicated_values)
-            return "Rows have duplicates."
-        elif col_dups:
-            duplicated_values = df[df.duplicated()]
-            st.write(duplicated_values)
-            return "Columns have duplicates." 
+        if column_name in df.columns:
+            col_dups = df[column_name].duplicated().any()
+            if col_dups:
+                duplicated_values = df[df[column_name].duplicated(keep=False)]
+                st.write(f'Duplicate values in column "{column_name}":')
+                st.write(duplicated_values)
+                return f'Duplicate values in column "{column_name}" found.'
+            else:
+                return f'No duplicate values in column "{column_name}" were found.'
         else:
-            return "No duplicates were found in rows or columns."
+            return f'Column "{column_name}" not found in the DataFrame.'
+
+# Function to handle duplicates in a specified column
+def handle_duplicates_in_column(df, column_name, selected_action):
+    if df is not None and not df.empty:  # Check if df is not None and not empty
+        if column_name in df.columns:
+            if selected_action == 'Take mean of duplicates':
+                df[column_name] = df.groupby(column_name)[column_name].transform('mean')
+                st.write(f'Mean of duplicates in column "{column_name}" taken.')
+                df
+            elif selected_action == 'Choose only the first value':
+                df = df[~df[column_name].duplicated(keep='first')]
+                st.write(f'Only the first value in column "{column_name}" kept.')
+                df
+            elif selected_action == 'Choose only the last value':
+                df = df[~df[column_name].duplicated(keep='last')]
+                st.write(f'Only the last value in column "{column_name}" kept.')
+                df
+            elif selected_action == 'Ignore':
+                st.write(f'No action taken for duplicates in column "{column_name}".')
+            return df
+        else:
+            st.write(f'Column "{column_name}" not found in the DataFrame.')
+            return None
 
 if df is not None and not df.empty:
-    st.write(check_duplicates(df))
+    selected_column = st.selectbox('Select a column to check for duplicates:', df.columns)
+    if selected_column:
+        st.write(check_duplicates_in_column(df, selected_column))
 
-
-# Decide
-def handle_duplicates(df):
-    dup_check = check_duplicates(df)
-    
-    if dup_check == "No duplicates were found in rows or columns.":
-        st.write('Moving on to the next cleaning step....')
+        if st.checkbox('Handle duplicates in this column'):
+            selected_action = st.selectbox(
+                f'How would you like to handle duplicates in column "{selected_column}"?',
+                ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore')
+            )
+            if selected_action != 'Ignore':
+                df = handle_duplicates_in_column(df, selected_column, selected_action)
+                st.write(f'Moving on to the next step...')
     else:
-        dup_handle = st.selectbox('How would you like to handle your duplicates? (Select one)', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
-        return dup_handle
+        st.write('Please select a valid column.')
 
-
-# Call the function
-dup_handle = handle_duplicates(df)
-
-# Ignore
-if dup_handle == 'Ignore':
-    st.write('Moving on to the next cleaning step')
-
-mean_operation = None
-keep_first = None
-keep_last = None
-
-# Means
-if dup_handle == 'Take mean of duplicates':
-    mean_operation = st.selectbox('Calculate mean for:',['Rows','Columns'])
-                                 
-if mean_operation == 'Rows':
-    st.subheader('Data after mean')
-    df = df.groupby(df.index).mean()
-    
-if  mean_operation == 'Columns': 
-    st.subheader('Data after mean')
-    df = df.groupby(df.columns).mean()
-
-
-# Keep first
-if dup_handle == 'Choose only the first value':    
-    keep_first = st.selectbox('Keep first of:',['Rows','Columns'])
-
-if keep_first == 'Rows':
-    st.subheader('After deleting unwanted duplicates')
-    df = df[~df.index.duplicated(keep='first')]
-    
-if  keep_first == 'Columns':
-    st.subheader('After deleting unwanted duplicates')
-    df = df.loc[:, ~df.columns.duplicated(keep='first')]
-
-# Keep last
-if dup_handle == 'Choose only the last value':    
-    keep_last = st.selectbox('Keep last of:',['Rows','Columns'])
-
-if keep_last == 'Rows':
-    st.subheader('After deleting unwanted duplicates')
-    df = df[~df.index.duplicated(keep='last')]
-    
-if  keep_last == 'Columns': 
-    st.subheader('After deleting unwanted duplicates')
     df = df.loc[:, ~df.columns.duplicated(keep='last')]
 
 
