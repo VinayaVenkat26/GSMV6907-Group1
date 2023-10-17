@@ -75,11 +75,14 @@ if df is not None and not df.empty:
 
 # Decide
 dup_check = check_duplicates(df)
-if dup_check != "No duplicates were found in rows or columns.":
-    st.write('How would you like to handle your duplicates? (Select one)')
-    dup_handle = st.selectbox('Please choose the file format you are uploading', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
-else:
+if dup_check == "No duplicates were found in rows or columns.":
     st.write('Moving on to the next cleaning step')
+
+dup_handle = st.selectbox('How would you like to handle your duplicates? (Select one)', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
+
+if dup_check != "No duplicates were found in rows or columns."
+     return dup_handle
+
     
 # Ignore
 if dup_handle == 'Ignore':
@@ -100,7 +103,7 @@ if  mean_operation == 'Columns'
 
 # Keep first
 if dup_handle == 'Choose only the first value':    
-    keep_first = st.seletbox('Keep first of:',['Rows','Columns'])
+    keep_first = st.selectbox('Keep first of:',['Rows','Columns'])
 
 if mean_operation == 'Rows':
     st.subheader('After deleting unwanted duplicates')
@@ -112,7 +115,7 @@ if  mean_operation == 'Columns'
 
 # Keep last
 if dup_handle == 'Choose only the last value':    
-    keep_first = st.seletbox('Keep last of:',['Rows','Columns'])
+    keep_first = st.selectbox('Keep last of:',['Rows','Columns'])
 
 if mean_operation == 'Rows':
     st.subheader('After deleting unwanted duplicates')
