@@ -9,6 +9,7 @@ import seaborn as sns
 
 # Information on the webtool
 st.title('Data cleaning webtool')
+st.write('Made by Group 1: Shree Pooja, Qing Xin, Vinaya Venkat, He Shan')
 
 st.sidebar.header('Welcome to the data cleaning webtool')
 st.sidebar.write('In this webtool, we will be cleaning your data file in the following ways:')
