@@ -87,7 +87,7 @@ if dup_handle == 'Ignore':
 
 # Means
 if dup_handle == 'Take mean of duplicates':
-    mean_operation = st.seletbox('Calculate mean for:',['Rows','Columns'])
+    mean_operation = st.selectbox('Calculate mean for:',['Rows','Columns'])
                                  
 if mean_operation == 'Rows':
     st.subheader('Data after mean')
