@@ -77,11 +77,12 @@ if df is not None and not df.empty:
 dup_check = check_duplicates(df)
 if dup_check != "No duplicates were found in rows or columns.":
     st.write('How would you like to handle your duplicates? (Select one)')
-    dup_handle = st.selectbox('Please choose the file format you are uploading', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value'))
+    dup_handle = st.selectbox('Please choose the file format you are uploading', ('Take mean of duplicates', 'Choose only the first value', 'Choose only the last value', 'Ignore'))
 else:
     st.write('Moving on to the next cleaning step')
 
-
+if dup_handle = 'Ignore':
+    st.write('Moving on to the next cleaning step')
 
 
 # Section 4: Manage missing values
