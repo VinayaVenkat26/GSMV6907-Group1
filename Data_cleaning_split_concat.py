@@ -56,8 +56,24 @@ if uploaded_file is not None:
             df["Concatenated_Column"] = df[concat_columns].astype(str).agg(separator.join, axis=1)
             st.subheader("Concatenated Data Result:")
             st.write(df)
+ 
+st.subheader("Column Selection:")
+    action = st.selectbox("Choose action:", ["Keep", "Delete"])
 
-    # Allow the user to download the modified DataFrame as an Excel file
+    if action == "Keep":
+        st.subheader("Select Columns to Keep")
+        columns_to_keep = st.multiselect("Select columns to keep:", df.columns)
+        df = df[columns_to_keep]
+        st.write(df)
+
+    elif action == "Delete":
+        st.subheader("Select Columns to Delete")
+        columns_to_delete = st.multiselect("Select columns to delete:", df.columns)
+        df = df.drop(columns=columns_to_delete)
+        st.write(df)
+  
+
+# Allow the user to download the modified DataFrame as an Excel file
     st.subheader("Download Processed Data")
     st.write("You can download the processed data as an Excel file.")
     st.markdown(get_binary_file_downloader_html(df), unsafe_allow_html=True)
