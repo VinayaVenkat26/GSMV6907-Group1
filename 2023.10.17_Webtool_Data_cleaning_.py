@@ -21,16 +21,21 @@ st.sidebar.markdown('[Split or concatenate columns](#split-concatenate-columns)'
 st.sidebar.markdown('[Date-to-Gene converter](#convert-dates-to-gene-names)')  # Provided the link to the gene-to-date converter
 show_docs = st.sidebar.checkbox('Check documentation')  # Need to add more documentation - complete demo with snapshots  
 
-
 # Section 1:  Doucmentation
-if show_docs:
-    st.header("Demonstration of the webtool")
-    st.write("This content is displayed on the main page when the checkbox in the sidebar is checked.")
 
-
-
-
-
+docu = st.sidebar.checkbox("Documentation")
+if docu:
+    st.title("Data Cleaner User Manual")
+    st.subheader("Data Cleaner is a web tool that serves as a one-stop solution for your large data files from your research")
+    st.write("With Data Cleaner, you can perform multiple data cleaning procedures by simply uploading your file and selecting how you would like your data to be cleaned.")
+    st.write("Currently, we provide the following functions:")
+    st.write("1. Duplicate value management")
+    st.write("2. Missing value management")
+    st.write("3. Data type conversion")
+    st.write("4. Column splitting and concatenation")
+    st.write("5. Date-to-Gene conversion (by Dr. Chan Kuan Rong)")
+    st.subheader("How do I use this web tool?")
+    st.write("To get yourself started, first you should choose a data file type that you want to be cleaned. We allow you to upload .xls, .xlsx, .csv, and .tsv files. Make sure that your file is a long file instead of a wide file.")
 
 # Section 2: Upload datafile
 st.markdown('<a name="upload-anchor"></a>', unsafe_allow_html=True)  # Create an anchor for this section
