@@ -185,36 +185,37 @@ df = handle_missing_values(df)
 
 
 # Section 5: Integer to decimal conversion and vice versa
-st.markdown('<a name="convert-int-to-decimal"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 st.subheader('4. Data type converter')
+st.markdown('<a name="convert-int-to-decimal"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 
 selected_option_convert = st.selectbox("Would you like to convert data types in your file?", ["NO", "YES"])
 
 if selected_option_convert == "YES":
     selected_conversion_type = st.selectbox("What conversion type would you like to perform?", ["Convert to Integers", "Convert to Floats", "Convert to Strings"])
-    columns_to_convert = st.text_input("Enter the names of the columns you want to convert (separate each column name by a comma without a space if inputting more than 1 column, e.g., apple,orange,avocado)")
-    
-    if columns_to_convert != "":
-        columns_to_convert_split = columns_to_convert.split(",")
-        non_existent_columns = [col for col in columns_to_convert_split if col not in df.columns]
-
-        if non_existent_columns:
-            st.write(f"The following columns do not exist in the DataFrame: {', '.join(non_existent_columns)}")
+    if selected_conversion_type == "Convert to Floats":
+        columns_to_convert = st.multiselect("Select the columns to convert:", df.columns)
+        if columns_to_convert != "":
+            df[columns_to_convert] = df[columns_to_convert].astype(float)
+            df
         else:
-            if selected_conversion_type == "Convert to Floats":
-                df[columns_to_convert_split] = df[columns_to_convert_split].astype(float)
-                st.subheader("Cleaned DataFrame:")
-                df
-            elif selected_conversion_type == "Convert to Integers":
-                df[columns_to_convert_split] = df[columns_to_convert_split].astype(int)
-                st.subheader("Cleaned DataFrame:")
-                df
-            elif selected_conversion_type == "Convert to Strings":
-                df[columns_to_convert_split] = df[columns_to_convert_split].astype(str)
-                st.subheader("Cleaned DataFrame:")
-                df
-    else:
-        st.write("Please recheck the column name. It does not exist")
+            st.write("Please type the names of the columns you wish to convert above.")
+
+    elif selected_conversion_type == "Convert to Integers":
+        columns_to_convert = st.multiselect("Select the columns to convert:", df.columns)
+        if columns_to_convert != "":
+            df[columns_to_convert] = df[columns_to_convert].astype(int)
+            df
+        else:
+            st.write("Please type the names of the columns you wish to convert above.")
+
+    elif selected_conversion_type == "Convert to Strings":
+        columns_to_convert = st.multiselect("Select the column to convert:", df.columns)
+        if columns_to_convert != "":
+            df[columns_to_convert] = df[columns_to_convert].astype(str)
+            df
+        else:
+            st.write("Please enter the names of the columns you wish to convert above.")
+
 else:
     st.write("We will NOT be converting data types in your file")
 
