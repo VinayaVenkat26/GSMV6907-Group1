@@ -22,9 +22,7 @@ st.sidebar.markdown('[Date-to-Gene converter](#convert-dates-to-gene-names)')  #
 show_docs = st.sidebar.checkbox('Check documentation')  # Need to add more documentation - complete demo with snapshots  
 
 # Section 1:  Doucmentation
-
-docu = st.sidebar.checkbox("Documentation")
-if docu:
+if show_docs:
     st.title("Data Cleaner User Manual")
     st.subheader("Data Cleaner is a web tool that serves as a one-stop solution for your large data files from your research")
     st.write("With Data Cleaner, you can perform multiple data cleaning procedures by simply uploading your file and selecting how you would like your data to be cleaned.")
