@@ -24,18 +24,31 @@ show_docs = st.sidebar.checkbox('Check documentation')  # Need to add more docum
 
 # Section 1:  Doucmentation
 if show_docs:
-    st.title("Data Cleaner User Manual")
-    st.subheader("Data Cleaner is a web tool that serves as a one-stop solution for your large data files from your research")
-    st.write("With Data Cleaner, you can perform multiple data cleaning procedures by simply uploading your file and selecting how you would like your data to be cleaned.")
-    st.write("Currently, we provide the following functions:")
+    st.title("Data cleaning webtool user manual")
+    st.subheader("Data cleaning webtool is a web tool that serves as a one-stop solution for your large data files from your research")
+    st.write("With this webtool, you can perform some common data cleaning procedures by simply uploading your file and selecting how you would like your data to be cleaned.")
+    st.write("Currently, we offer the following functions:")
     st.write("1. Duplicate value management")
     st.write("2. Missing value management")
     st.write("3. Data type conversion")
     st.write("4. Column splitting and concatenation")
-    st.write("5. Date-to-Gene conversion (by Dr. Chan Kuan Rong)")
     st.subheader("How do I use this web tool?")
-    st.write("To get yourself started, first you should choose a data file type that you want to be cleaned. We allow you to upload .xls, .xlsx, .csv, and .tsv files. Make sure that your file is a long file instead of a wide file.")
-
+    st.subheader("Getting started")
+    st.write("To get yourself started, first you should choose a data file type that you want to be cleaned. We allow you to upload .xls, .xlsx, .csv, and .tsv files. Make sure that your file is a long file instead of a wide file. If you have not uploaded your file, an example file is already loaded. So you can still explore the functions of this webtool.")
+    st.subheader("Functions")
+    st.write("1. Duplicate value management")
+    st.write("This function is performed automatically without you having to make a decision. However, you will still be able to choose which colomns to check duplicate values from with a dropdown menu. You can also choose whether and how you wish to handle the detected duplicates. You can take the mean value of each columns of the duplicates, keep the first row, keep the second row, or simply ignore it.")
+    st.write("2. Missing value management")
+    st.write("This function is also performed automatically without you having to make a decision. It will identify rows with empty cells and have you to decide what to do with those rows. You can delete those rows or fill in a placeholder value for all of them.")
+    st.write("3. Data type converter")
+    st.write("This function allows you to convert data types of specific rows into integers, floats, or strings. You need to choose whether you wish to initiate this function first with a dropdown menu. Then simply choose what data types you want the columns to be converted to and the names of the columns to convert.")
+    st.write("4. Split or concatenate columns")
+    st.write("This function allows you to either split or concatenate columns. You need to choose whether you wish to initiate this function first with a dropdown menu. Then you can choose whether you want to perform a split, a concatenation, or both. After that, you can either choose to select columns to keep or to delete. ")
+    st.subheader("Save your file")
+    st.write("After all the functions are successfully performed, you can save your cleaned file by clicking 'Download Excel File'. And you are good to go with your clean date file!")
+    st.subheader("Extra resources")
+    st.write("Finally, to pay homage to our greatest lecturer ever, Dr. Chan Kuan Rong, we have included a link to his proud webtool where you can convert dates that were converted automatically from gene names by Excel back to their original forms. You can download your clean file and proceed to the Date-to-Gene tool with the included link if you so wish.")
+    
 # Section 2: Upload datafile
 st.markdown('<a name="upload-anchor"></a>', unsafe_allow_html=True)  # Create an anchor for this section
 st.subheader('1. Uploading your datafile')
@@ -236,9 +249,7 @@ if selected_option_convert == "YES":
         st.write("Please select the columns you wish to convert.")
 
 else:
-    st.write("We will NOT be converting data types in your file")
-
-
+    st.write("We will NOT be converting data types in your file.")
 
 
 
@@ -247,61 +258,104 @@ st.markdown('<a name="split-concatenate-columns"></a>', unsafe_allow_html=True) 
 st.subheader('5. Split or concatenate columns')
 
 # Code for splitting or concatenating columns
-st.subheader('Options:')
-operation = st.radio("Select an action:", ("Split", "Concatenate"))
 
-if operation == "Split":
-        # Split columns
-    st.subheader("Split Columns")
-    column_to_split = st.selectbox("Select the column to split:", df.columns)
-    separator = st.text_input("Separator for splitting:", ",")
+selected_option_splitconcat = st.selectbox("Would you like to split or concatenate columns in your file?", ["NO", "YES"])
+
+if selected_option_splitconcat == "YES":
+
+    st.subheader('Options:')
+    operation = st.radio("Select an action:", ("Split", "Concatenate", "Both"))
+
+    if operation == "Split":
+            # Split columns
+        st.subheader("Split Columns")
+        column_to_split = st.selectbox("Select the column to split:", df.columns)
+        separator = st.text_input("Separator for splitting:", ",")
+
+            # Ensure the selected column is treated as a string before splitting
+        split_values = df[column_to_split].astype(str).str.split(separator, expand=True)
+
+            # Label the split columns with the original column name
+        split_values.columns = [f"{column_to_split}_{i + 1}" for i in range(split_values.shape[1])]
+
+            # Display the split values along with the original dataset
+        st.write(split_values)
+        st.write("Merged Dataset with Split Columns")
+        merged_df = pd.concat([df, split_values], axis=1)
+        st.write(merged_df)
+
+    elif operation == "Concatenate":
+            # Concatenate columns
+        st.subheader("Concatenate Columns")
+        st.write("Select the columns to concatenate:")
+        concat_columns = st.multiselect("Columns to concatenate:", df.columns)
+        separator = st.text_input("Separator for concatenation:", " ")
+        concat_df = df[concat_columns].astype(str).agg(separator.join, axis=1)
+
+            # Display the concatenated values along with the original dataset
+        st.write("Concatenated Values")
+        st.write(concat_df)
+        st.write("Merged Dataset with Concatenated Column")
+        merged_df = pd.concat([df, concat_df.rename("Concatenated_Column")], axis=1)
+        st.write(merged_df)
         
-        # Ensure the selected column is treated as a string before splitting
-    split_values = df[column_to_split].astype(str).str.split(separator, expand=True)
+    else:
+            # Do both
+        st.subheader("Split Columns")
+        column_to_split = st.selectbox("Select the column to split:", df.columns)
+        separator = st.text_input("Separator for splitting:", ",")
 
-        # Label the split columns with the original column name
-    split_values.columns = [f"{column_to_split}_{i + 1}" for i in range(split_values.shape[1])]
+            # Ensure the selected column is treated as a string before splitting
+        split_values = df[column_to_split].astype(str).str.split(separator, expand=True)
 
-        # Display the split values along with the original dataset
-    st.write(split_values)
-    st.write("Merged Dataset with Split Columns")
-    merged_df = pd.concat([df, split_values], axis=1)
-    st.write(merged_df)
+            # Label the split columns with the original column name
+        split_values.columns = [f"{column_to_split}_{i + 1}" for i in range(split_values.shape[1])]
 
-else:
+            # Display the split values along with the original dataset
+        st.write(split_values)
+        st.write("Merged Dataset with Split Columns")
+        merged_df_split = pd.concat([df, split_values], axis=1)
+        st.write(merged_df_split)
+        
         # Concatenate columns
-    st.subheader("Concatenate Columns")
-    st.write("Select the columns to concatenate:")
-    concat_columns = st.multiselect("Columns to concatenate:", df.columns)
-    separator = st.text_input("Separator for concatenation:", " ")
-    concat_df = df[concat_columns].astype(str).agg(separator.join, axis=1)
+        st.subheader("Concatenate Columns")
+        st.write("Select the columns to concatenate:")
+        concat_columns = st.multiselect("Columns to concatenate:", merged_df_split.columns)
+        separator = st.text_input("Separator for concatenation:", " ")
+        concat_df = merged_df_split[concat_columns].astype(str).agg(separator.join, axis=1)
 
-        # Display the concatenated values along with the original dataset
-    st.write("Concatenated Values")
-    st.write(concat_df)
-    st.write("Merged Dataset with Concatenated Column")
-    merged_df = pd.concat([df, concat_df.rename("Concatenated_Column")], axis=1)
-    st.write(df)
+            # Display the concatenated values along with the original dataset
+        st.write("Concatenated Values")
+        st.write(concat_df)
+        st.write("Merged Dataset with Concatenated Column")
+        merged_df = pd.concat([merged_df_split, concat_df.rename("Concatenated_Column")], axis=1)
+        st.write(merged_df)
 
-    # Set the value of the action variable
-action = st.radio("Choose action:", ("Keep Selected Columns", "Delete Selected Columns"))
+        # Set the value of the action variable
+    action = st.radio("Choose action:", ("Keep Selected Columns", "Delete Selected Columns"))
+    
+        # Continue with the action based on the user's choice
+    if action == "Keep Selected Columns":
+        columns_to_keep = st.multiselect("Please select all columns to keep:", merged_df.columns)
+        result_df = merged_df[columns_to_keep]
+    else:
+        columns_to_delete = st.multiselect("Please select all columns to delete:", merged_df.columns)
+        result_df = merged_df.drop(columns=columns_to_delete)
 
-# Continue with the action based on the user's choice
-if action == "Keep Selected Columns":
-    columns_to_keep = st.multiselect("Please select all columns to keep:", merged_df.columns)
-    result_df = merged_df[columns_to_keep]
+
+    # Display the resulting dataset
+        st.subheader("Resulting Dataset")
+        st.write(result_df)
+
 else:
-    columns_to_delete = st.multiselect("Please select all columns to delete:", merged_df.columns)
-    result_df = merged_df.drop(columns=columns_to_delete)
-
-# Display the resulting dataset
-    st.subheader("Resulting Dataset")
-    st.write(result_df)
+    st.write("We will NOT be splitting or concatenating columns in your file.")
+    result_df = df
     
 
 # Section 7: Conclusion , retieving the data from the webtool
 
 # Function to create a download link for the processed data
+
 def get_binary_file_downloader_html(df):
 
     # Create a BytesIO object to store the Excel file
@@ -326,9 +380,3 @@ st.subheader('Extra resource -  Date-to-Gene Tool')
 st.write("If you want to perform a Date-to-Gene conversion in your file, you can click the link below to launch the Date-to-Gene tool made by Dr. Chan Kuan Rong")
 
 st.write("https://share.streamlit.io/kuanrongchan/date-to-gene-converter/main/date_gene_tool.py")
-
-
-
-
-
-
