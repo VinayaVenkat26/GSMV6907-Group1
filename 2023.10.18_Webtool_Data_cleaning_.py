@@ -269,10 +269,10 @@ action = st.radio("Choose action:", ("Keep Selected Columns", "Delete Selected C
 # Continue with the action based on the user's choice
 if action == "Keep Selected Columns":
     columns_to_keep = st.multiselect("Columns to keep:", merged_df.columns)
-    result_df = df[columns_to_keep]
+    result_df = merged_df[columns_to_keep]
 else:
     columns_to_delete = st.multiselect("Columns to delete:", merged_df.columns)
-    result_df = df.drop(columns=columns_to_delete)
+    result_df = merged_df.drop(columns=columns_to_delete)
 
 # Display the resulting dataset
     st.subheader("Resulting Dataset")
