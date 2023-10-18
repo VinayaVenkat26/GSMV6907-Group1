@@ -192,33 +192,34 @@ selected_option_convert = st.selectbox("Would you like to convert data types in 
 
 if selected_option_convert == "YES":
     selected_conversion_type = st.selectbox("What conversion type would you like to perform?", ["Convert to Integers", "Convert to Floats", "Convert to Strings"])
-    if selected_conversion_type == "Convert to Floats":
-        columns_to_convert = st.multiselect("Select the columns to convert:", df.columns)
-        if columns_to_convert != "":
+    columns_to_convert = st.multiselect("Select the columns to convert:", df.columns)
+
+    if columns_to_convert:
+        if selected_conversion_type == "Convert to Floats":
             df[columns_to_convert] = df[columns_to_convert].astype(float)
-            df
-        else:
-            st.write("Please type the names of the columns you wish to convert above.")
 
-    elif selected_conversion_type == "Convert to Integers":
-        columns_to_convert = st.multiselect("Select the columns to convert:", df.columns)
-        if columns_to_convert != "":
+        elif selected_conversion_type == "Convert to Integers":
+            # Check for NaN or infinite values in the columns
+            if df[columns_to_convert].isnull().any().any() or np.isinf(df[columns_to_convert]).any().any():
+                action = st.radio("NaN or infinite values detected. How would you like to handle them?",
+                                  ["Replace with specific value", "Drop rows containing NaN or inf", "Do nothing"])
+                if action == "Replace with specific value":
+                    replace_val = st.number_input("Enter the value to replace NaN or infinite values with:", value=0)
+                    df[columns_to_convert] = df[columns_to_convert].fillna(replace_val).replace([np.inf, -np.inf], replace_val)
+                elif action == "Drop rows containing NaN or inf":
+                    df.dropna(subset=columns_to_convert, inplace=True)
+                    df = df[~np.isinf(df[columns_to_convert]).any(axis=1)]
             df[columns_to_convert] = df[columns_to_convert].astype(int)
-            df
-        else:
-            st.write("Please type the names of the columns you wish to convert above.")
 
-    elif selected_conversion_type == "Convert to Strings":
-        columns_to_convert = st.multiselect("Select the column to convert:", df.columns)
-        if columns_to_convert != "":
+        elif selected_conversion_type == "Convert to Strings":
             df[columns_to_convert] = df[columns_to_convert].astype(str)
-            df
-        else:
-            st.write("Please enter the names of the columns you wish to convert above.")
+
+        st.write(df)
+    else:
+        st.write("Please select the columns you wish to convert.")
 
 else:
     st.write("We will NOT be converting data types in your file")
-
 
 
 
