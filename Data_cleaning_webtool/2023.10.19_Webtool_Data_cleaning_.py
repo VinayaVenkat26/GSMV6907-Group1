@@ -76,7 +76,7 @@ if upload is not None:
         df = pd.read_csv(upload, sep='\t', index_col = 0)
 else:
     # Load an example datafile 
-    url = "https://raw.githubusercontent.com/VinayaVenkat26/GSMV6907-Group1/main/Streamlit%20demo%20dataset.xlsx"
+    url = "https://raw.githubusercontent.com/VinayaVenkat26/GSMV6907-Group1/main/Data_cleaning_webtool/Streamlit_demo_dataset.xlsx"
     df = pd.read_excel(url,index_col = 0) 
     st.write('No file uploaded. Showing example data.')
     st.write(df)
