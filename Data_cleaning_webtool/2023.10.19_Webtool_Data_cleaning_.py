@@ -48,7 +48,7 @@ if show_docs:
     st.subheader("Save your file")
     st.write("After all the functions are successfully performed, you can save your cleaned file by clicking 'Download Excel File'. And you are good to perform your downstream processes on your clean date file!")
     st.subheader("Extra resources")
-    st.write("Finally, to pay homage to our greatest lecturer ever, Dr. Chan Kuan Rong, we have included a link to his webtool where you can convert dates that were converted automatically from gene names by Excel back to the original gene names but with the new approved format of gene names that even Excel cannot tamper with. You can download your clean file and proceed to the Date-to-Gene tool with the included link if you so wish. Do check out the documentation in their webtool for more information")
+    st.write("Finally, to pay homage to our greatest lecturer ever, Dr. Chan Kuan Rong, we have included a link to his webtool where you can convert dates that were converted automatically from gene names by Excel back to the original gene names but with the new approved format of gene names that even Excel cannot tamper with. You can download your clean file and proceed to the Date-to-Gene tool with the included link if you so wish. Do check out the documentation in their webtool for more information.")
     st.write("This webtool was made as part of an assignment for the DUke NUS Medical School, GMS6907 module. Creators: Shree Pooja, Qing Xin, Vinaya Venkat, He Shan")
     
 # Section 2: Upload datafile
