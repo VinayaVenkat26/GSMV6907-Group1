@@ -23,37 +23,37 @@ For easy navigation, we have the main headings and a few notes on the datafile t
 
 ### Functions
   #### 1. Duplicate value management
-    This function is performed automatically without you having to manually manage the data. 
-    You will be able to choose the column to check duplicate values from a dropdown menu. 
-    The detected duplicate values will be returned back to you. 
-    Next, you choose how you wish to handle the detected duplicates. 
-    You can take the mean value of each of the duplicate rows, keep the first row, keep the last row, or simply ignore it.
+  This function is performed automatically without you having to manually manage the data. 
+  You will be able to choose the column to check duplicate values from a dropdown menu. 
+  The detected duplicate values will be returned back to you. 
+  Next, you choose how you wish to handle the detected duplicates. 
+  You can take the mean value of each of the duplicate rows, keep the first row, keep the last row, or simply ignore it.
     
   #### 2. Missing value management
-    This function is also performed automatically. 
-    It will identify rows with empty cells and have you to decide how you would like to manage those missing values. 
-    You can delete those rows or fill in a placeholder value for all of them. 
-    This is useful since a lot of downatream processing may have issues if there are empty cells
+  This function is also performed automatically. 
+  It will identify rows with empty cells and have you to decide how you would like to manage those missing values. 
+  You can delete those rows or fill in a placeholder value for all of them. 
+  This is useful since a lot of downatream processing may have issues if there are empty cells
     
   #### 3. Data type converter
-    This function allows you to convert data types of specific rows into integers, floats, or strings. 
-    You need to choose whether you wish to initiate this function first with a dropdown menu. 
-    Then simply choose what data types you want the columns to be converted to and the names of the columns to convert.
+  This function allows you to convert data types of specific rows into integers, floats, or strings. 
+  You need to choose whether you wish to initiate this function first with a dropdown menu. 
+  Then simply choose what data types you want the columns to be converted to and the names of the columns to convert.
     
   #### 4. Split or concatenate columns
-    This function allows you to either split or concatenate columns. 
-    You need to choose whether you wish to initiate this function first with a dropdown menu. 
-    Then you can choose whether you want to perform a split, a concatenation, or both. 
-    Additionally post-splitting, you can choose which columns you want to keep and which columns you want to delete.
+  This function allows you to either split or concatenate columns. 
+  You need to choose whether you wish to initiate this function first with a dropdown menu. 
+  Then you can choose whether you want to perform a split, a concatenation, or both. 
+  Additionally post-splitting, you can choose which columns you want to keep and which columns you want to delete.
     
   ### Save your file
-    After all the functions are successfully performed, you can save your cleaned file by clicking 'Download Excel File'. 
-    And you are good to perform your downstream processes on your clean date file!
+  After all the functions are successfully performed, you can save your cleaned file by clicking 'Download Excel File'. 
+  And you are good to perform your downstream processes on your clean date file!
     
   ### Extra resources
-    "Finally, to pay homage to our greatest lecturer ever, Dr. Chan Kuan Rong, we have included a link to his webtool where you can convert dates that were converted automatically from gene names by Excel back to the original gene namesbut with the new approved format of gene names that even Excel cannot tamper with.
-    You can download your clean file and proceed to the Date-to-Gene tool with the included link if you so wish. 
-    Do check out the documentation in their webtool for more information.
+  Finally, to pay homage to our greatest lecturer ever, Dr. Chan Kuan Rong, we have included a link to his webtool where you can convert dates that were converted automatically from gene names by Excel back to the original gene namesbut with the new approved format of gene names that even Excel cannot tamper with.
+  You can download your clean file and proceed to the Date-to-Gene tool with the included link if you so wish. 
+  Do check out the documentation in their webtool for more information.
     
   This webtool was made as part of an assignment for the DUke NUS Medical School, GMS6907 module. Creators: Shree Pooja, Qing Xin, Vinaya Venkat, He Shan
     
