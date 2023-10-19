@@ -1,5 +1,5 @@
 # Webtool user manual
-##### Data cleaning webtool is a web tool that serves as a one-stop solution for your large data files from your research
+##### Data cleaning webtool is a web tool that serves as a one-stop solution for cleaning large datafiles.
 
 With this webtool, you can perform some common data cleaning procedures by simply uploading your file and selecting how you would like your data to be cleaned.
 
