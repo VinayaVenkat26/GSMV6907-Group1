@@ -24,7 +24,7 @@ show_docs = st.sidebar.checkbox('**Check documentation**', value = True)  # Need
 # Section 1:  Doucmentation
 if show_docs:
     st.header("Webtool user manual")
-    st.subheader("Data cleaning webtool is a web tool that serves as a one-stop solution for your large data files from your research")
+    st.subheader("Data cleaning webtool is a web tool that serves as a one-stop solution to clean larg datafiles produced from your research. ")
     st.write("With this webtool, you can perform some common data cleaning procedures by simply uploading your file and selecting how you would like your data to be cleaned.")
     st.write("Currently, we offer the following functions:")
     st.write("1. Duplicate value management")
